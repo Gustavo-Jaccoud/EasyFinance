@@ -1,0 +1,21 @@
+# Etapa de build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Copia só o .csproj e restaura dependências (melhora o cache)
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copia o resto e publica
+COPY . ./
+RUN dotnet publish -c Release -o /app/publish
+
+# Etapa de runtime — imagem leve só com o necessário
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+
+# Porta padrão no Docker (pode sobrescrever no compose)
+EXPOSE 80
+
+ENTRYPOINT ["dotnet", "EasyFinance.dll"]

@@ -1,0 +1,22 @@
+# Pastas de build
+bin/
+obj/
+
+# Configurações de IDE
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Logs e resultados
+*.log
+TestResults/
+
+# Arquivos sensíveis ou temporários
+.env
+secrets.json
